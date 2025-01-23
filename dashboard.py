@@ -10,14 +10,61 @@ st.set_page_config(
 )
 
 PRSA_DataAvg_ModePerMonth = pd.read_csv("PRSA_DataAvg_ModePerMonth.csv", sep=",", encoding="utf-8")
-PRSA_DataAvg_ModePerYear= pd.read_csv("PRSA_DataAvg_ModePerYear.csv", sep=",", encoding="utf-8")
+# PRSA_DataAvg_ModePerYear= pd.read_csv("PRSA_DataAvg_ModePerYear.csv", sep=",", encoding="utf-8")
 min_date=PRSA_DataAvg_ModePerMonth["month_year"].min()
 max_date=PRSA_DataAvg_ModePerMonth["month_year"].max()
 # st.write(min_date,max_date)
 
 with st.sidebar:
-    st.image("https://github.com/dicodingacademy/assets/raw/main/logo.png")
-    
+    # st.image("https://github.com/dicodingacademy/assets/raw/main/logo.png")
+    st.markdown(
+        """
+        <style>
+        .rounded-image {
+            border-radius: 15px;
+            border: 2px solid #ccc;
+            padding: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 100%;
+            height: auto; 
+        }
+        </style>
+        <img src="https://raw.githubusercontent.com/AldiPrasetyoHari/Air-Quality-Analysys/main/Ilustrasipengukurankualitasudara.jpg"
+        class="rounded-image">
+        <style>
+        .linkedin-logo {
+            display: flex;
+            align-items: center;
+        }
+        .linkedin-logo img {
+            width: 24px; /* Ukuran logo */
+            margin-right: 10px; /* Jarak antara logo dan teks */
+        }
+        .linkedin-logo a {
+            text-decoration: none;
+            color: #0077b5; /* Warna LinkedIn */
+            font-size: 14px;
+        }
+        </style>
+        <style>
+        .doku-logo {
+            display: flex;
+            align-items: center;
+        }
+        .doku-logo img {
+            width: 24px; /* Ukuran logo */
+            margin-right: 10px; /* Jarak antara logo dan teks */
+        }
+        .doku-logo a {
+            text-decoration: none;
+            color: #0077b5; /* Warna LinkedIn */
+            font-size: 14px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    # st.image("https://raw.githubusercontent.com/AldiPrasetyoHari/Air-Quality-Analysys/main/Ilustrasipengukurankualitasudara.jpg")
     # Meminta input rentang waktu
     date_range = st.date_input(
         label="Pilih Rentang Waktu Data",
@@ -25,6 +72,12 @@ with st.sidebar:
         max_value=max_date,
         value=[min_date, max_date]
     )
+    try:
+        if start_date or end_date: 
+            pass
+    except NameError:
+        start_date=min_date
+        end_date=max_date
 
     # Periksa apakah pengguna sudah selesai memilih kedua tanggal
     if len(date_range) < 2:
@@ -36,13 +89,48 @@ with st.sidebar:
         else:
             st.success(f"Rentang Tanggal: {start_date} hingga {end_date}")
             # Tambahkan logika lain untuk memproses data berdasarkan rentang tanggal
+    
+    
+    # Menampilkan informasi referensi saat tombol ditekan
+    st.markdown(
+        """
+        <div style="display: flex; align-items: flex-end;">
+            <img src="https://raw.githubusercontent.com/AldiPrasetyoHari/Air-Quality-Analysys/main/doku.png" alt="Dokumen Logo" style="width: 30px; margin-right: 10px; vertical-align: bottom;">
+            <span style="font-size: 14px;">Referensi :</span>
+        </div>
+        <span style="font-size: 14px; font-style: italic;">
+        Chen, S. (2017). Beijing Multi-Site Air Quality [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5RK5G.
+        <a href="https://archive.ics.uci.edu/dataset/501/beijing+multi+site+air+quality+data" target="_blank">[Link]</a><br>
+        Li, Y., Tang, Y., Fan, Z., Zhou, H., & Yang, Z. (2017). Assessment and comparison of three different air quality indices in China. Environmental Engineering Research, 23, 21-27.
+        <a href="https://www.semanticscholar.org/paper/Assessment-and-comparison-of-three-different-air-in-Li-Tang/42ef17eef5a39ce971d5b76c976924c9162dcbbe?utm_source=direct_link" target="_blank">[Link]</a><br>
+        Ren, L., Yang, W., & Bai, Z. (2017). Characteristics of Major Air Pollutants in China. Advances in experimental medicine and biology, 1017, 7-26.
+        <a href="https://www.semanticscholar.org/paper/Characteristics-of-Major-Air-Pollutants-in-China.-Ren-Yang/31fdb8c32f635ba103183e269919ecffe2fdb4ee?utm_source=direct_link" target="_blank">[Link]</a><br>
+        Zhang, S., Guo, B., Dong, A., He, J., Xu, Z., & Chen, S.X. (2017). Cautionary tales on air-quality improvement in Beijing. Proceedings of the Royal Society A: Mathematical, Physical and Engineering Sciences, 473. [Link](https://doi.org/10.5678/health.rev.2021.09876)
+        <a href="https://www.semanticscholar.org/paper/Cautionary-tales-on-air-quality-improvement-in-Zhang-Guo/59c99a7bf19617b43be0aa9f492def8c80ffae19?utm_source=direct_link" target="_blank">[Link]</a><br>
+        Air Pollutant Units and Conversion Factors.
+        <a href="https://www2.environment.nsw.gov.au/topics/air/understanding-air-quality-data/units-and-conversion-factors" target="_blank">[Link]</a><br>
+        Air Quality.
+        <a href="https://www.epa.vic.gov.au/for-community/environmental-information/air-quality" target="_blank">[Link]</a><br>
+        </span><br><br>
+        <div class="linkedin-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" alt="LinkedIn Logo">
+            <a href="https://www.linkedin.com/in/aldi-prasetyo-hari/" target="_blank">Aldi Prasetyo Hari</a>
+        </div><br>
+        <div style="display: flex; align-items: center; margin-right: 15px;">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg" alt="GitHub Logo" style="width: 30px; margin-right: 10px;">
+            <a href="https://github.com/AldiPrasetyoHari/Air-Quality-Analysys" target="_blank" style="font-size: 14px;">GitHub Profile</a>
+        </div><br>
+        """,
+        unsafe_allow_html=True,
+    )
+    
 
 tab1, tab2= st.tabs(["Dashboard Time Series", "Dashboard Air Quality Parameter"])
 
 with tab1:
-    st.markdown(f"<p style='font-size: 12px;text-align: justify;'>Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size: 12px;text-align: justify;font-style: italic;'>Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.</p>", unsafe_allow_html=True)
     st.markdown(f"<p style='font-size: 14px;text-align: justify;'>Anda dapat mengamati bagaimana historical data dari setiap station untuk setiap parameter pollutant yang digunakan atau bahkan dibandingkan dengan parameter cuaca yang ada. \
-                Namun perlu diperhatikan terdapat ketentuan dalam konfigurasi pilihan antara station, parameter pollutant dan parameter cuaca. Ketentuan tersebut akan memunculkan pesan otomatis sehingga anda dapat menyesuaikan kembali konfigurasi yang dipilih. Terima kasih :)</p>", unsafe_allow_html=True)
+                Namun perlu diperhatikan terdapat ketentuan dalam konfigurasi pilihan antara station, parameter pollutant dan parameter cuaca. Ketentuan tersebut akan memunculkan pesan otomatis sehingga anda dapat menyesuaikan kembali konfigurasi yang dipilih.</p>", unsafe_allow_html=True)
     # st.write(f"Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.")
     # Daftar station dan parameter polutan
     stations = PRSA_DataAvg_ModePerMonth["station"].unique()
@@ -124,12 +212,7 @@ with tab1:
     if len(selected_parameters_pollutant) == 2:
         ax2 = ax1.twinx()  # Membuat sumbu Y kedua
         
-    try:
-        if start_date or end_date:  # atau logika lain yang ingin Anda periksa
-            pass
-    except NameError:
-        start_date=min_date
-        end_date=max_date
+    
 
     PRSA_DataAvg_ModePerMonth=PRSA_DataAvg_ModePerMonth[(PRSA_DataAvg_ModePerMonth['month_year']>=str(start_date)) & (PRSA_DataAvg_ModePerMonth['month_year']<=str(end_date))]
 
@@ -211,7 +294,7 @@ with tab1:
     # Menampilkan grafik di Streamlit
     st.pyplot(fig)
 with tab2:
-    st.markdown(f"<p style='font-size: 12px;text-align: justify;'>Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size: 12px;text-align: justify;font-style: italic;'>Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.</p>", unsafe_allow_html=True)
     st.markdown(f"<p style='font-size: 14px;text-align: justify;'>Anda dapat mengamati station mana saja yang memiliki proporsi kategori tertinggi dan terendah berdasarka level kategori yang telah ditentukan. Kategori ini merupakan klasifikasi yang dibuat berdasarkan literatur jurnal termasuk dalam formulasi limit level kategorinya.\
                 Level kategori memiliki hierarki terendah ke tertinggi yakni Extremly Poor, Very Poor, Poor, Fair, dan Good. Sebagai contoh untuk rentang tanggal 2013/03/01 - 2017/02/01 untuk parameter PM2.5 Lowest diperoleh station Dongsi pada urutan pertama. Meskipun secara proporsi ia hanya bernilai 6.25% namun secara hierarki Extremely Poor memiliki priority nomor 1\
                 sehingga insight yang dapat diperoleh yakni pada station Dongsi harus dilakukan penanganan terlebih dahulu karena memiliki parameter kualitas PM2.5 yang Extremly poor, disusul oleh station berikutnya.<br>\
@@ -513,4 +596,19 @@ with tab2:
             with col3:
                 tampilan_param(all_proportions, parampa, "col3")
 
-st.caption('Copyright APH24 (c) 2025')
+st.markdown(
+    """
+    <style>
+    .center-caption {
+        text-align: center; /* Teks di tengah */
+        font-size: 0.8rem; /* Ukuran font yang sesuai untuk caption */
+        color: gray; /* Warna teks */
+        margin-top: 20px; /* Memberi jarak dari elemen atas */
+    }
+    </style>
+    <div class="center-caption">Copyright APH24 &copy; 2025</div>
+    """,
+    unsafe_allow_html=True,
+)
+
+# st.caption('Copyright APH24 (c) 2025')
