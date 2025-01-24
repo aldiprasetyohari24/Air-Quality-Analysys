@@ -9,7 +9,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-PRSA_DataAvg_ModePerMonth = pd.read_csv("PRSA_DataAvg_ModePerMonth.csv", sep=",", encoding="utf-8")
+PRSA_DataAvg_ModePerMonth = pd.read_csv("dashboard/PRSA_DataAvg_ModePerMonth.csv", sep=",", encoding="utf-8")
 # PRSA_DataAvg_ModePerYear= pd.read_csv("PRSA_DataAvg_ModePerYear.csv", sep=",", encoding="utf-8")
 min_date=PRSA_DataAvg_ModePerMonth["month_year"].min()
 max_date=PRSA_DataAvg_ModePerMonth["month_year"].max()
