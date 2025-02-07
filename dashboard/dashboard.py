@@ -81,13 +81,17 @@ with st.sidebar:
 
     # Periksa apakah pengguna sudah selesai memilih kedua tanggal
     if len(date_range) < 2:
-        st.info("Silakan pilih rentang tanggal lengkap (Mulai dan Selesai).")
+        # st.info("Silakan pilih rentang tanggal lengkap (Mulai dan Selesai).")
+        st.info("Please select the complete date range (Start and End).")
+        
     else:
         start_date, end_date = date_range
         if start_date > end_date:
-            st.error("Tanggal mulai tidak boleh lebih besar dari tanggal selesai.")
+            # st.error("Tanggal mulai tidak boleh lebih besar dari tanggal selesai.")
+            st.error("The start date cannot be later than the end date.")
         else:
-            st.success(f"Rentang Tanggal: {start_date} hingga {end_date}")
+            # st.success(f"Rentang Tanggal: {start_date} hingga {end_date}")
+            st.success(f"Date Range: {start_date} to {end_date}")
             # Tambahkan logika lain untuk memproses data berdasarkan rentang tanggal
     
     
@@ -128,9 +132,12 @@ with st.sidebar:
 tab1, tab2= st.tabs(["Dashboard Time Series", "Dashboard Air Quality Parameter"])
 
 with tab1:
-    st.markdown(f"<p style='font-size: 12px;text-align: justify;font-style: italic;'>Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.</p>", unsafe_allow_html=True)
-    st.markdown(f"<p style='font-size: 14px;text-align: justify;'>Anda dapat mengamati bagaimana historical data dari setiap station untuk setiap parameter pollutant yang digunakan atau bahkan dibandingkan dengan parameter cuaca yang ada. \
+    # st.markdown(f"<p style='font-size: 12px;text-align: justify;font-style: italic;'>Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.</p>", unsafe_allow_html=True)
+    # st.markdown(f"<p style='font-size: 14px;text-align: justify;'>Anda dapat mengamati bagaimana historical data dari setiap station untuk setiap parameter pollutant yang digunakan atau bahkan dibandingkan dengan parameter cuaca yang ada. \
                 Namun perlu diperhatikan terdapat ketentuan dalam konfigurasi pilihan antara station, parameter pollutant dan parameter cuaca. Ketentuan tersebut akan memunculkan pesan otomatis sehingga anda dapat menyesuaikan kembali konfigurasi yang dipilih.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size: 12px;text-align: justify;font-style: italic;'>The data displayed is within the time range: {start_date} to {end_date}. If you wish to adjust it, please select the dates through the Sidebar on your left.</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='font-size: 14px;text-align: justify;'>You can observe the historical data from each station for every pollutant parameter used or even compare it with the available weather parameters. \
+    However, please note that there are specific rules in the configuration choices between stations, pollutant parameters, and weather parameters. These rules will trigger an automatic message, allowing you to adjust the selected configuration accordingly.</p>", unsafe_allow_html=True)
     # st.write(f"Data yang ditampilkan merupakan data dalam rentang waktu : {start_date} hingga {end_date} , Jika ingin menyesuaikan silahkan pilih tanggal melalui Sidebar di samping kiri anda.")
     # Daftar station dan parameter polutan
     stations = PRSA_DataAvg_ModePerMonth["station"].unique()
@@ -138,21 +145,25 @@ with tab1:
     parameter_pollutant = ["CO", "NO2", "SO2", "O3", "PM2.5", "PM10"]
 
     # Streamlit UI untuk memilih station dan parameter
-    stations_with_all = ["Pilih Semua"] + list(stations)
+    stations_with_all = ["Select All"] + list(stations)
 
     # Filter untuk memilih station
-    selected_stations = st.multiselect("Pilih Station Pengamatan", options=stations_with_all, default=[stations_with_all[0]])
+    # selected_stations = st.multiselect("Pilih Station Pengamatan", options=stations_with_all, default=[stations_with_all[0]])
+    selected_stations = st.multiselect("Select Observation Station", options=stations_with_all, default=[stations_with_all[0]])
 
     # Filter untuk memilih parameter polutan
-    selected_parameters_pollutant = st.multiselect("Pilih Parameter Pollutant", options=parameter_pollutant, default=["PM2.5"])
+    # selected_parameters_pollutant = st.multiselect("Pilih Parameter Pollutant", options=parameter_pollutant, default=["PM2.5"])
+    selected_parameters_pollutant = st.multiselect("Select Pollutant Parameter", options=parameter_pollutant, default=["PM2.5"])
 
     # Checkbox untuk parameter cuaca
-    show_selectbox = st.checkbox('Bandingkan dengan parameter cuaca')
+    # show_selectbox = st.checkbox('Bandingkan dengan parameter cuaca')
+    show_selectbox = st.checkbox('Compare with Weather Parameters')
 
     # Pengecekan jika parameter cuaca aktif
     if show_selectbox:
-        if "Pilih Semua" in selected_stations or not selected_stations:
-            st.warning("Anda hanya boleh memilih salah satu station saat parameter cuaca diaktifkan.")
+        if "Select All" in selected_stations or not selected_stations:
+            # st.warning("Anda hanya boleh memilih salah satu station saat parameter cuaca diaktifkan.")
+            st.warning("You can only select one station when the weather parameter is enabled.")
             selected_stations = ["Aotizhongxin"]  # Kosongkan pilihan jika 'Pilih Semua' dipilih
 
         # Pastikan hanya satu parameter cuaca yang dipilih
